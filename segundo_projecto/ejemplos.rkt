@@ -1,10 +1,18 @@
 #lang racket
 
 (define (divisible? n x)
-  (= (remainder n x) 0))
+  ( zero? (remainder n x)))
 
 (define(divisores x)
-  (for ([y x])
+  (for ([y (in-range 1 x)])
     (when (divisible? x y)
-      (append(list y)))))
-  
+      (display(append(list y))))))
+
+(define(primo x)
+  (= (divisores x) (list 1 x)))
+
+(define (largo x)
+  (length x))
+
+(define (primero x)
+  (list-ref x 0))
