@@ -1,0 +1,32 @@
+
+LINEA 1: SINTAXIS OK.
+LINEA 2: SINTAXIS OK.
+LINEA 3: 1 Error(es) léxicos / de sintaxis
+LINEA 4: 3 Error(es) léxicos / de sintaxis
+LINEA 5: 1 Error(es) léxicos / de sintaxis
+LINEA 6: SINTAXIS OK.
+LINEA 7: 2 Error(es) léxicos / de sintaxis
+LINEA 8: SINTAXIS OK.
+LINEA 9: 1 Error(es) léxicos / de sintaxis
+LINEA 10: SINTAXIS OK.
+LINEA 11: 15 Error(es) léxicos / de sintaxis
+LINEA 12: SINTAXIS OK.
+LINEA 13: SINTAXIS OK.
+LINEA 14: 4 Error(es) léxicos / de sintaxis
+LINEA 15: SINTAXIS OK.
+LINEA 16: SINTAXIS OK.
+LINEA 17: 4 Error(es) léxicos / de sintaxis
+LINEA 18: SINTAXIS OK.
+LINEA 19: SINTAXIS OK.
+LINEA 20: SINTAXIS OK.
+LINEA 21: SINTAXIS OK.
+LINEA 22: SINTAXIS OK.
+LINEA 23: SINTAXIS OK.
+LINEA 24: 2 Error(es) léxicos / de sintaxis
+LINEA 25: SINTAXIS OK.
+LINEA 26: 3 Error(es) léxicos / de sintaxis
+LINEA 27: 1 Error(es) léxicos / de sintaxis
+LINEA 28: SINTAXIS OK.
+LINEA 29: 2 Error(es) léxicos / de sintaxis
+LINEA 30: 2 Error(es) léxicos / de sintaxis
+LINEA 31: SINTAXIS OK.

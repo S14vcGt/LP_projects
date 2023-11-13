@@ -1,0 +1,8 @@
+#lang racket
+
+(define (divisible? n x)
+  (zero? (remainder n x)))
+
+(define(divisores x)
+  (for/list ([y x (when (divisible x y))])))
+  
