@@ -4,10 +4,10 @@
   ( zero? (remainder n x)))
 
 (define(divisores x)
-  (for/list ([y (in-range 1 x)]
-             #: when (divisible? x y))))
+  (for/list ([y (in-range 1 (+ 1 x))]
+             #:when (divisible? x y))
+      y))
     
- 
 
 (define(primo x)
   (= (divisores x) (list 1 x)))
@@ -19,3 +19,4 @@
   (if (null? x)
       ( error "no se permiten listas vacias")
       ( list-ref x 0)))
+  
