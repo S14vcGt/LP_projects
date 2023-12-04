@@ -1,0 +1,192 @@
+El objetivo es ubicar rascacielos en todas las celdas en la grilla de acuerdo a las reglas:  
+- La altura de los rascacielos es desde 1 hasta el tamaño de la grilla ej. 1 a 4 para un puzzle de 4x4.  
+- No pueden haber dos rascacielos con la misma altura en la misma fila o columna.  
+- Los números en los lados de la grilla indican cuántos rascacielos se verían si se mira en 
+la dirección de la flecha.  
+Ubica números en cada celda para indicar la altura de los rascacielos
+
+las vistas a medida que son mas grandes permiten menos números probables, 
+lo que permite hacer deducciones de los números posibles 
+n = dimension de la grilla (nxn)
+
+edificios validos en casilla con vista u = range(n-u+1)
+
+funcion deduccion
+comienza por los números mas grandes de las vistas y ve posicionando los numeros mayores  para sacar las conclusiones
+
+cuando haya duda tienes que ver en ambas columna y fila
+
+el backtracking lo puedo usar cuando no sabemos la vista(en realidad se puede usar para todo el asunto) 
+y hay que correrlo para averiguar, ejecute primero una corrida y si no funciona retorne hasta el punto que 
+se hizo esa opercion y ejecute otra accion
+
+primero debe ir asignando los numero validos para esa casilla, luego recorrerla de lado a lado, asignando
+los numero posibles desde el mas pequeño o ir preguntando cuales son los que faltan, e ir retornando cada 
+que no hay mas numeros validos o no se complacen las vistas, o se ha llegado al final del puzzle. 
+Cada vez que asigna un numero se debe eliminar ese numero de los posibles en la columna y la fila. 
+siempre que se rellena una columna o una fila se chequean las vistas, si no concuerdan, tambien se regresa
+
+de que clase seran los caracteres que representen vistas anonimas?
+me recomienda que use backtracking indiscriminadamente?, o como puedo solucionarlo utilizando mas las vistas? 
+pq usando backtracking indiscriminadamente las tablas grandes o las que tienen vistas anónimas se tardaran mucho en 
+ser resueltas
+
+(vistas((Norte), (Sur), (Oeste o sea izquierda), (Este)))
+
+ (vistas'((3 1 2 2) (2 3 1 2) (2 2 1 3) (3 1 3 2)))
+R= ((2 4,3,1), (3,1,2,4), (4,3,1,2), (1,2,4,3))
+
+(cond
+        [else (and(and(not(= i 0))(not(= i (sub1 tam))))(and (not(= j 0))(not(= j (sub1 tam))))) (for*/list ([k(in-range 1 7)])k)])
+
+
+
+funcion asignar-valido(tam, vistas){
+    grilla = arreglo[tam][tam]
+
+	para (i=0, i<tam,i++){
+		para (j=0, j<tam,j++){
+			si(i == 0){
+				si(vistas[0][j] == 1){
+					grilla[i][j]= lista(tam)
+				}sino{
+                    grilla[i][j]= lista(range tam - vistas[0][j]+1)
+				}
+			}sino{
+				si(j==0){
+					si(vistas[2][i] == 1){
+						grilla[i][j]= lista(tam) 
+					}sino{
+						grilla[i][j]= lista(range tam - vistas[2][i]+1)
+					}
+				}
+			}
+			si(i == tam-1){
+				si(vistas[1][j] == 1){
+					grilla[i][j]= lista(tam)
+				}sino{
+					grilla[i][j]= lista(range tam - vistas[1][i]+1)
+				}
+			}sino{
+				si(j== tam-1){
+					si(vistas[3][i] == 1){
+						grilla[i][j]= lista(tam)
+					}sino{
+						grilla[i][j]= lista(range tam - vistas[3][i]+1)
+					}
+				}
+			}
+			si(i != 0 | i!=tam - 1 | j!=0| j!=tam - 1){
+				grilla[i][j]= lista(range tam)
+			}
+		}
+	}
+    retornar grilla
+}
+
+funcion comprobar_fila(grilla,fil,col,vistas,n){
+    vistos=1
+    mayor=grilla[fil][0]
+    para(i=0,i<n,i++){
+        si(grilla[fil][i]> mayor){
+            vistos++
+            mayor=grilla[fil][i]
+        }
+    }
+    si(vistos!=vistas[2][fil]){
+        retorna false
+    }
+    vistos=1
+    para(i=n-1,i=0,i--){
+            si(grilla[fil][i]> mayor){
+                vistos++
+                mayor=grilla[fil][i]
+            }
+        }
+        si(vistos!=vistas[3][fil]){
+            retorna false
+        }
+    retorna true
+}
+
+funcion comprobar_columna(grilla,fil,col,vistas, n){
+    vistos=1
+    mayor=grilla[0][col]
+    para(i=0,i<n,i++){
+            si(grilla[i][col]> mayor){
+                vistos++
+                mayor=grilla[fil][i]
+            }
+        }
+        si(vistos!=vistas[0][col]){
+            retorna false
+        }
+    vistos=1
+    para(i=n-1,i=0,i--){
+            si(grilla[i][col]> mayor){
+                vistos++
+                mayor=grilla[i][col]
+            }
+        }
+        si(vistos!=vistas[1][col]){
+            retorna false
+        }
+    retorna true
+}
+
+funcion elegible(grilla, fil, col, valor, n){
+    para(i=0,i<n, i++){
+        si(valor == grilla[fil][i] | valor == grilla[i][col] ){
+            retornar false
+        }
+    }
+}
+
+funcion resolve(grilla, tam, fil, col, vistas){
+	
+    si( fil == tam){
+		retorna o muestra la grilla
+	}
+    si( col == tam-1){
+        retorna resolve(grilla, tam, fil + 1, 0, vistas)
+    }
+	posibles= grilla[fil][col]
+    
+    result= false
+    para(i =0, i<posibles.len,i++) {
+        si(result==false){
+            valor= posibles[i]
+            si (elegible(grilla, fil, col, valor, tam)){
+                grilla[fil][col]= valor
+                si(fil= tam - 1){
+                    si(not (comprobar_fila(grilla,fil, col, vistas, tam) and 
+                        comprobar_columna(grilla,fil,col,vistas,tam))){
+                        grilla[fil][col]= posibles
+                        retorna false
+                    }
+                }
+                result= resolve(grilla, tam, fil, col+1, vistas)
+            }; sino es elegible, paso al siguiente
+        }sino{
+            retorna result
+        }
+    }
+    grilla[fil][col]= posibles
+    retorna false
+}
+
+funcion vistas(lista){
+    retornar resolve(asignar-valido(lista.len, lista), lista.len, 0, 0, lista)
+}
+
+```
+
+si no hay mas números posibles, o no se complacen las vistas, retorna false
+si se retorna false, se trata con el siguiente valor posible hasta que se retorne true, 
+es decir se completo la fila y se pasa a la siguiente
+
+se tiene que comprobar si el numero asignado esta ya en la fila, si no esta se continua, 
+si ya esta se retorna false
+
+una vez que se complete la fila se deben chequear las vistas, si estas concuerdan 
+se mueve a la siguiente fila, sino false 
