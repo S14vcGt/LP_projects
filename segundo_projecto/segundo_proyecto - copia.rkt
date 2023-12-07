@@ -1,9 +1,9 @@
 #lang racket
 ;Sebastian Mata - C.I: 30547594
 
-(define (asignar-valido tam vistas); me entrega una matriz tam x tam con los numeros posibles en cada casilla segun las vistas
+(define (asignar-valido tam vistas); me entrega una matriz tam x tam con los numeros posibles en cada casilla segun las vistas 
   (for*/list ([i(in-range tam)]); una lista de vectores
-    (for*/vector ([j(in-range tam)]); , to speed up the algorithm i put list with the most likely numbers so it just can pick one of those 
+    (for*/vector ([j(in-range tam)])
       (cond; dependiendo de la vista que corresponda con la casilla actual, se le asignan los numeros probables con la formula (tam - vistas[i][j])+1
         [ (= i 0) (if (= (list-ref(car vistas) j) 1)
                       (list tam)
@@ -19,7 +19,7 @@
                                (for*/list ([k(in-range 1 (+ 2 (- tam (list-ref(list-ref vistas 3)i))))])k))]
         [else (for*/list ([k(in-range 1 (add1 tam))])k)]))))
 
-(define (verificador tam fil-col vistas vertex index); verifica las vistas en los 4 puntos cardinales, verify the views in the 4 cardinal points
+(define (verificador tam fil-col vistas vertex index); verifica las vistas en los 4 puntos cardinales
   (let*([vistos 1]
         [mayor (car fil-col)])
           (for ([i (in-range tam)])
@@ -30,17 +30,12 @@
                         #f
                         #t))))
 
-(define (elegible grilla fil col tam vistas valor); me dice si el valor que se quiere asignar a la casilla no esta repetido, it tells if the value is not repeated
+(define (elegible grilla fil col tam vistas valor); me dice si el valor que se quiere asignar a la casilla no esta repetido
    (let* ([fila (vector->list (list-ref grilla fil))]
          [columna (map (lambda (x) (vector-ref (list-ref grilla x) col)) (range tam))]
          [in-fila? (member valor fila)]
          [in-col? (member valor columna)])
-    (display fila) (newline)
-     (display columna)(newline)
-     (display " no idea")(newline)
-     (display in-fila?) (newline)
-     (display in-col?) (newline)
-     (if (or in-fila? in-col?); si el valor esta en la fila o en la columna actual, false 
+    (if (or in-fila? in-col?); si el valor esta en la fila o en la columna actual, false 
         #f
         #t)))
 
@@ -65,20 +60,18 @@
                  [valor 0]);el valor a probar
              (for* ([ i (in-range (length posibles))])
                (if ( equal? result #f)
-                   ((set! valor (list-ref posibles i)); here is where the debugger find the error
-                    (let ([ aver (elegible grilla fil col tam vistas valor)]); just for debugging elegible
+                   ((set! valor (list-ref posibles i))
+                    (define aver (elegible grilla fil col tam vistas valor))
                     (when (equal? aver #t)
-                      ((vector-set! (list-ref grilla fil) col valor)
+                      (vector-set! (list-ref grilla fil) col valor)
                       (if (= (- tam 1) col)
                         (unless (vigilante grilla fil col tam vistas)
                           (vector-set! (list-ref grilla fil) col posibles)
                           #f)
-                        (set! result (resolve grilla tam fil (add1 col) vistas))))))
+                        (set! result (resolve grilla tam fil (add1 col) vistas))))
                    ) result))
              (vector-set! (list-ref grilla fil) col posibles) #f)]))
 
 (define (vistas lista)
   (let* ([grilla (asignar-valido (length (car lista )) lista)])
-    (resolve grilla (length lista) 0 0 lista)))
-; in (vistas'((3 1 2 2) (2 3 1 2) (2 2 1 3) (3 1 3 2)))
-; supossed out ((2 4,3,1), (3,1,2,4), (4,3,1,2), (1,2,4,3))
+    (resolve grilla (length lista) 0 0 lista))); debo convertirlos en listas antes de la salida
