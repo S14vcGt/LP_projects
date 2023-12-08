@@ -60,22 +60,22 @@
     [(= fil tam) (display(for*/list ([i (in-range tam)]) ;si ya llega al final, se imprime la grilla
                           (vector->list (list-ref grilla i))))]
     [(= col (sub1 tam)) (resolve grilla tam (add1 fil) 0 vistas)]; si es la ultima columna, se pasa a la siguiente fila
-    [else ( let*([posibles (vector-ref (list-ref grilla fil)col)]; la variable con la lista de los posibles valores
+    [else ((for-each (lambda (r) (display r) (newline)) grilla) (let*([posibles (vector-ref (list-ref grilla fil)col)]; la variable con la lista de los posibles valores
                  [result #f]; el resultado
                  [valor 0]);el valor a probar
              (for* ([ i (in-range (length posibles))])
                (if ( equal? result #f)
-                   ((set! valor (list-ref posibles i)); here is where the debugger find the error
+                   (begin (set! valor (list-ref posibles i)); here is where the debugger find the error
                     (let ([ aver (elegible grilla fil col tam vistas valor)]); just for debugging elegible
-                    (when (equal? aver #t)
-                      ((vector-set! (list-ref grilla fil) col valor)
+                    (if (equal? aver #t)
+                      ( begin (vector-set! (list-ref grilla fil) col valor); usando cond
                       (if (= (- tam 1) col)
-                        (unless (vigilante grilla fil col tam vistas)
-                          (vector-set! (list-ref grilla fil) col posibles)
-                          #f)
-                        (set! result (resolve grilla tam fil (add1 col) vistas))))))
-                   ) result))
-             (vector-set! (list-ref grilla fil) col posibles) #f)]))
+                        (if (not (vigilante grilla fil col tam vistas))
+                          (begin (vector-set! (list-ref grilla fil) col posibles)
+                          #f) #f) #f)
+                        (begin (set! result (resolve grilla tam fil (add1 col) vistas))))#f)))
+                    result))
+             (vector-set! (list-ref grilla fil) col posibles) #f))]))
 
 (define (vistas lista)
   (let* ([grilla (asignar-valido (length (car lista )) lista)])

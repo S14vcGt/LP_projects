@@ -39,7 +39,7 @@ R= ((2 4,3,1), (3,1,2,4), (4,3,1,2), (1,2,4,3))
 (cond
         [else (and(and(not(= i 0))(not(= i (sub1 tam))))(and (not(= j 0))(not(= j (sub1 tam))))) (for*/list ([k(in-range 1 7)])k)])
 
-
+usando cond tambien
 
 funcion asignar-valido(tam, vistas){
     grilla = arreglo[tam][tam]
@@ -159,8 +159,7 @@ funcion resolve(grilla, tam, fil, col, vistas){
             si (elegible(grilla, fil, col, valor, tam)){
                 grilla[fil][col]= valor
                 si(fil= tam - 1){
-                    si(not (comprobar_fila(grilla,fil, col, vistas, tam) and 
-                        comprobar_columna(grilla,fil,col,vistas,tam))){
+                    si(not (comprobar_vistas(grilla,fil, col, vistas, tam))){
                         grilla[fil][col]= posibles
                         retorna false
                     }

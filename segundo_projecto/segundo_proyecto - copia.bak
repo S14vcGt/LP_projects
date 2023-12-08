@@ -52,10 +52,10 @@
               
 (define (resolve grilla tam fil col vistas)
   (cond
-    [(= fil tam) (display(for*/list ([i (in-range tam)]) 
+    [(= fil tam) (display(for*/list ([i (in-range tam)]) ;si ya llega al final, se imprime la grilla
                           (vector->list (list-ref grilla i))))]
-    [(= col (sub1 tam)) (resolve grilla tam (add1 fil) 0 vistas)]
-    [else ( let*([posibles (vector-ref (list-ref grilla fil)col)]
+    [(= col (sub1 tam)) (resolve grilla tam (add1 fil) 0 vistas)]; si es la ultima columna, se pasa a la siguiente fila
+    [else ( let*([posibles (vector-ref (list-ref grilla fil)col)]; la variable con la lista de los posibles valores
                  [result #f]; el resultado
                  [valor 0]);el valor a probar
              (for* ([ i (in-range (length posibles))])
@@ -63,7 +63,7 @@
                    ((set! valor (list-ref posibles i))
                     (when (elegible grilla fil col tam vistas valor)
                       (vector-set! (list-ref grilla fil) col valor)
-                      (when (= (- tam 1) col)
+                      (if (= (- tam 1) col)
                         (unless (vigilante grilla fil col tam vistas)
                           (vector-set! (list-ref grilla fil) col posibles)
                           #f)
