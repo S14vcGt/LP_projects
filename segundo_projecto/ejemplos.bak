@@ -1,8 +1,21 @@
 #lang racket
 
 (define (divisible? n x)
-  (zero? (remainder n x)))
+  ( zero? (remainder n x)))
 
 (define(divisores x)
-  (for/list ([y x (when (divisible x y))])))
-  
+  (for/list ([y (in-range 1 (+ 1 x))]
+             #:when (divisible? x y))
+      y))
+    
+
+(define(primo x)
+  (equal? (divisores x) (list 1 x)))
+
+(define (largo x)
+  (length x))
+
+(define (primero x)
+  (if (null? x)
+      ( error "no se permiten listas vacias")
+      ( list-ref x 0)))
