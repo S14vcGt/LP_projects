@@ -2,10 +2,15 @@
 /**
 ** EBNF
 ** <numero>::= 0,1,2,3,4,5,6,7,8,9
+** /\d/
 ** <variable>::= (a,b,c,..., A,B,C,...)
+** /[a-zA-Z]/
 ** <operador>::= ^,*,-,+,=,/
+** /[^*-+=/]/
 ** <operando>::= {<numero>} | {<variable>} | '('<O>')' | '|'<O>'|' | {<numero>}'.'{<numero>}
+** 
 ** <O> ::= <operando>[{<operador><operando>}]
+** /<operando>[<operador><operando>]+*(nada mas)/
  */
 
 const fs= require('fs'); // invoco al modulo fylesistem
