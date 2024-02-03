@@ -1,13 +1,12 @@
 %consult('C:/Users/Sebas/OneDrive/Escritorio/LP_projects/3er_proyecto/3_son_multitud.pl').
 %Sebastian_Mata_30547594
 
+matriz([[0,_,_,_,_,_], [_,_,1,0,_,_], [_,_,1,1,_,_], [_,_,_,0,1,_], 
+[_,1,_,1,1,_], [_,_,_,_,_,_]]).
+
 es_anonima(Var):-
 var(Var),
-\+ \+ Var = _,
-!.
-
-concatenar([],L,L):-!.
-concatenar([X|M],L,[X|Z]):-concatenar(M,L,Z).
+\+ \+ Var = _,!.
 
 len([],0):-!.
 len([X|Y],S):-len(Y,T),!, S is T + 1.
@@ -29,18 +28,22 @@ N1 is N -1,
 da_n_pri(M,N1,T),
 concatenar([X],T,S).
 
-invertir_tot([],[]):-!.
-invertir_tot([X|M],S):-
-lista(X),
-invertir_tot(X,P),
-invertir_tot(M,T),
-concatenar(T,[P],S).
-invertir_tot([X|M],S):-invertir_tot(M,T),concatenar(T,[X],S),!.
+revertir_lista([], []).
+revertir_lista([X|Resto], Revertida) :-
+    revertir_lista(Resto, RestoRevertido),
+    append(RestoRevertido, [X], Revertida).
+%
 
+da_n_ultim(L,N,S):-
+revertir_lista(L,T),
+da_n_pri(T,N,R),
+revertir_lista(R,S).
 
-desde_x([Y|M],X,S):-X=\=Y,desde_x(M,X,S),!.
-desde_x([X,Y|M],X,[Y|M]):-X=\=Y,!.
-desde_x([Y|M],X,S):-desde_x(M,X,S),!.
+recorrer(_,0,[]):-!.
+recorrer([X|L],N,R):-
+    
 
-
-
+3_son_multitud([],[]):-!.
+3_son_multitud(L,R):-
+len(L,N),
+recorrer(L,N,R).
