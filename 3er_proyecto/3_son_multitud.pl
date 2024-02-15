@@ -1,11 +1,4 @@
-%consult('C:/Users/Sebas/OneDrive/Escritorio/LP_projects/3er_proyecto/3_son_multitud.pl').
 %Sebastian_Mata_30547594
-
-matriz([[_,0,0,_,_,0], [0,_,_,_,_,_], [_,_,0,_,_,1], [_,_,_,_,0,_], [0,_,_,1,_,_], [0,_,_,_,_,_]]).
-
-marta([[_,_,0,0,_,_,_,_],[_,_,_,_,_,0,_,_],[_,_,_,0,_,_,_,0],[_,_,_,_,_,_,_,0],[_,_,_,1,1,_,_,_],[_,_,_,_,0,_,1,_],[0,_,_,_,_,_,_,0],[_,1,_,0,_,1,_,_]]).
-
-raul([[_,_,_,_,_,_,_,1,_,_],[_,0,0,_,_,0,_,_,1,_],[_,0,_,_,1,_,_,0,_,0],[_,_,1,_,_,_,1,_,_,_],[1,_,1,_,_,_,_,_,_,1],[_,_,_,_,_,_,_,1,_,_],[_,0,_,_,1,_,_,_,0,_],[_,_,_,_,1,1,_,_,_,0],[_,0,_,0,_,_,1,_,_,0],[0,_,_,_,0,_,_,_,1,_]]).
 
 revertir_lista([], []).%revierte la lista
 revertir_lista([X|L], S) :- revertir_lista(L, R), append(R, [X], S).
@@ -19,7 +12,7 @@ transponer(X,N,M):-
     append(W,[S],M).
 %
 
-rotar([],[]).%inicia el procedimiento
+rotar([],[]).%inicia el procedimiento de rotar
 rotar(L,M):- length(L,N), transponer(L,N,M).
 
 
